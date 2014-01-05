@@ -1,4 +1,4 @@
-% Pandocx: Markdown to be come .docx
+% Pantex: latex templated with Pandoc
 % Erick Matsen (matsen@fhcrc.org)
 
 ## Subsection

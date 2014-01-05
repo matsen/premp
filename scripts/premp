@@ -46,12 +46,18 @@ amsart)
     $render "SConstruct.Latex" $project_name
     $render ".gitignore.Latex" $project_name
     ;;
+pandocx)
+    $render "pandocx.md" $project_name
+    $render "Makefile.Pandocx" $project_name
+    $render ".gitignore.Pandocx" $project_name
+    ;;
 pantex)
     $render "pantex.md" $project_name
     $render "Makefile.Pantex" $project_name
     $render ".gitignore.Pantex" $project_name
     cp $premp_root/templates/pandoc-template.tex .
     ;;
+
 esac
 
 git init

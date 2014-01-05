@@ -30,7 +30,7 @@ def main():
     proj_name = args.project_name
 
     (root, ext) = os.path.splitext(templ_name)
-    if ext in ["", ".Latex", ".Pantex"]: # these get rendered
+    if ext in ["", ".Latex", ".Pantex", ".Pandocx"]: # these get rendered
         write_rendered(templ_name, proj_name, root)
     elif ext in [".tex", ".bib", ".md"]: # these just get copied
         shutil.copy(os.path.join(templates_dir, templ_name), proj_name+ext)
