@@ -30,12 +30,10 @@ def main():
     proj_name = args.project_name
 
     (root, ext) = os.path.splitext(templ_name)
-    if ext == "": # no extension gives straight templating
+    if ext in ["", ".Latex", ".Pantex"]: # these get rendered
         write_rendered(templ_name, proj_name, root)
-    elif ext == ".Latex": # latex associated files
-        write_rendered(templ_name, proj_name, root)
-    elif ext in [".tex", ".bib"]: # these just get copied
-        shutil.copy(os.path.join(templates_dir, templ_name), proj_name)
+    elif ext in [".tex", ".bib", ".md"]: # these just get copied
+        shutil.copy(os.path.join(templates_dir, templ_name), proj_name+ext)
     else:
         raise ValueError("`%s` is not a known extension." % ext)
 

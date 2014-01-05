@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e -u
 
+premp_root=~/re/premp
+render=~/re/premp/scripts/premp-render
 
 bad_argument() {
     printf "Usage: %s: [-r [remote]] type project_name\n" $0
@@ -25,13 +27,13 @@ bad_argument() {
 # done
 # shift $(($OPTIND - 1))
 
-project_type=$1
-project_name=$2
-
-if [ -z $project_name ]
+if [ $# -ne 2 ]
 then
     bad_argument
 fi
+
+project_type=$1
+project_name=$2
 
 echo "Making your $project_type project '$project_name' ..."
 
@@ -40,9 +42,19 @@ cd $project_name
 
 case $project_type in
 amsart)
-    ~/re/premp/scripts/premp-render "amsart.tex" $project_name
-    ~/re/premp/scripts/premp-render "SConstruct.Latex" $project_name
-    ~/re/premp/scripts/premp-render ".gitignore.Latex" $project_name
+    $render "amsart.tex" $project_name
+    $render "SConstruct.Latex" $project_name
+    $render ".gitignore.Latex" $project_name
+    ;;
+pantex)
+    $render "pantex.md" $project_name
+    $render "Makefile.Pantex" $project_name
+    $render ".gitignore.Pantex" $project_name
+    cp $premp_root/templates/pandoc-template.tex .
     ;;
 esac
+
+git init
+git add .
+git commit -av -m "Initial commit"
 
