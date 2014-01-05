@@ -11,12 +11,11 @@ import os
 import re
 import shutil
 
-def add_template_dir(fname):
-    return(os.path.join("templates",fname))
+templates_dir= "/home/matsen/re/premp/templates"
 
 def write_rendered(templ_name, proj_name, out_name):
-    print("Rendering your "+templ_name+" for "+proj_name+"...")
-    lookup = TemplateLookup(directories=['templates'])
+    print("Rendering your "+templ_name+" for '"+proj_name+"'...")
+    lookup = TemplateLookup(directories=[templates_dir])
     templ = lookup.get_template("{0}.mako".format(templ_name))
     with open(out_name, 'w') as outfile:
         outfile.write(templ.render(proj=proj_name))
@@ -29,15 +28,16 @@ def main():
 
     templ_name = args.template_name
     proj_name = args.project_name
+
     (root, ext) = os.path.splitext(templ_name)
     if ext == "": # no extension gives straight templating
         write_rendered(templ_name, proj_name, root)
-    if ext == ".Latex": # latex associated files
+    elif ext == ".Latex": # latex associated files
         write_rendered(templ_name, proj_name, root)
     elif ext in [".tex", ".bib"]: # these just get copied
-        shutil.copy(add_template_dir(templ_name), proj_name + ext)
+        shutil.copy(os.path.join(templates_dir, templ_name), proj_name)
     else:
-        raise ValueError("`"+ext+"` is not a known extension.")
+        raise ValueError("`%s` is not a known extension." % ext)
 
 
 

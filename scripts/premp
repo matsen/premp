@@ -1,31 +1,31 @@
 #!/bin/sh
+set -e -u
 
-REMOTE=
 
 bad_argument() {
     printf "Usage: %s: [-r [remote]] type project_name\n" $0
     exit 2
 }
 
+# REMOTE=""
+# while getopts r: name
+# do
+#     case $name in
+#     r)
+#         if [ -z $OPTARG ]
+#         then
+#             REMOTE=$GIT_REMOTE # default to value of GIT_REMOTE
+#         else
+#             REMOTE=$OPTARG
+#         fi
+#         ;;
+#     ?)   bad_argument
+#         ;;
+#     esac
+# done
+# shift $(($OPTIND - 1))
 
-while getopts r: name
-do
-    case $name in
-    r)
-        if [ -z $OPTARG ]
-        then
-            REMOTE=$GIT_REMOTE # default to value of GIT_REMOTE
-        else
-            REMOTE=$OPTARG
-        fi
-        ;;
-    ?)   bad_argument
-        ;;
-    esac
-done
-shift $(($OPTIND - 1))
-
-type=$1
+project_type=$1
 project_name=$2
 
 if [ -z $project_name ]
@@ -33,9 +33,16 @@ then
     bad_argument
 fi
 
-case $type in
-tex)
-    echo "tex" $project_name
+echo "Making your $project_type project '$project_name' ..."
+
+mkdir $project_name
+cd $project_name
+
+case $project_type in
+amsart)
+    ~/re/premp/scripts/premp-render "amsart.tex" $project_name
+    ~/re/premp/scripts/premp-render "SConstruct.Latex" $project_name
+    ~/re/premp/scripts/premp-render ".gitignore.Latex" $project_name
     ;;
 esac
 
