@@ -7,6 +7,7 @@
 \usepackage{enumerate}
 \usepackage{bm}
 \usepackage{color}
+\usepackage{todonotes}
 
 % in case of supplementary material
 % \usepackage{xr}
@@ -36,6 +37,10 @@
 \newtheorem{obs}{Observation}
 \newtheorem{alg}{Algorithm}
 
+% todonotes
+\newcommand{\erick}[1]{\todo[color=green!40]{Erick: #1}}
+
+
 \newcommand{\FIGplate}{\
 \begin{figure}
 \begin{center}
@@ -60,6 +65,14 @@ This, that.
 \end{abstract}
 
 \maketitle
+
+% Make a todo table of contents.
+\makeatletter
+\providecommand\@dotsep{5}
+\makeatother
+\listoftodos\relax
+
+
 
 \section{Introduction}
 
